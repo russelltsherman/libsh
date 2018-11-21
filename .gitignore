@@ -1,0 +1,12 @@
+
+# ignore .vars file
+.vars
+
+# ignore .direnv
+.direnv
+
+# ignore .buildkite
+.buildkite
+
+# ignore pyc files
+*.pyc
