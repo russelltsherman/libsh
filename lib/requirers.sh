@@ -76,12 +76,16 @@ function require_node(){
 
 function require_nodeversion() {
   require_nvm
+  set +E
+  set +e
   running "Check Requirement: Node verion $*"
   source "$NVM_DIR/nvm.sh"
   if ! nvm install "$@" >> "$SETUPLOG" 2>&1
   then
     error "failed to install Node version $*"
   fi
+  set -E
+  set -e
   ok
 }
 
@@ -101,8 +105,6 @@ function require_nvm() {
   set +o nounset
   if test ! -s "$NVM_DIR/nvm.sh"
   then
-    require_brew jq
-
     bot "Installing NVM"
     latest=$(curl https://api.github.com/repos/creationix/nvm/releases/latest -s | jq .name -r)
     if ! curl -o- "https://raw.githubusercontent.com/creationix/nvm/$latest/install.sh" | bash >> "$SETUPLOG" 2>&1
